@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Warda by Maryam</title>
+    <!-- Google Fonts link for Great Vibes -->
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet" />
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #fff7f8;
+            color: #317873; /* soft teal */
+            margin: 0;
+            padding: 0;
+            direction: ltr;
+        }
+        header {
+            background-color: #f8c8d8;
+            padding: 20px 0;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(49, 120, 115, 0.3);
+        }
+        header h1 {
+            font-family: 'Great Vibes', cursive;
+            margin: 0;
+            font-size: 3em;
+            font-weight: 400; /* lighter for script */
+        }
+        main {
+            max-width: 800px;
+            margin: 30px auto;
+            padding: 0 20px;
+            text-align: center;
+            position: relative;
+        }
+        main p {
+            font-size: 1.2em;
+            margin-bottom: 40px;
+        }
+        .slider-wrapper {
+            position: relative;
+            display: inline-block;
+            max-width: 80%;
+            margin: 0 auto 20px auto;
+        }
+        img.flower {
+            width: 100%;
+            height: auto;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(49, 120, 115, 0.15);
+            display: block;
+        }
+        /* Side arrow buttons */
+        button.arrow-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: rgba(49, 120, 115, 0.3); /* soft teal, transparent */
+            border: none;
+            color: white;
+            font-size: 2.5em;
+            padding: 0 12px;
+            cursor: pointer;
+            border-radius: 50%;
+            user-select: none;
+            transition: background-color 0.3s ease;
+        }
+        button.arrow-btn:hover {
+            background-color: rgba(49, 120, 115, 0.6);
+        }
+        button#btn-prev {
+            left: 10px;
+        }
+        button#btn-next {
+            right: 10px;
+        }
+        footer {
+            background-color: #f8c8d8;
+            text-align: center;
+            padding: 15px 0;
+            margin-top: 40px;
+            font-size: 0.9em;
+            color: #317873;
+        }
+        a.contact-link {
+            color: #317873;
+            text-decoration: none;
+            font-weight: 600;
+        }
+        a.contact-link:hover {
+            text-decoration: underline;
+        }
+        #content-ar {
+            display: none;
+            direction: rtl;
+        }
+    </style>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const userLang = navigator.language || navigator.userLanguage;
+            const enContent = document.getElementById("content-en");
+            const arContent = document.getElementById("content-ar");
+
+            if(userLang.startsWith("ar")) {
+                enContent.style.display = "none";
+                arContent.style.display = "block";
+                document.documentElement.lang = "ar";
+                document.body.style.direction = "rtl";
+            } else {
+                enContent.style.display = "block";
+                arContent.style.display = "none";
+                document.documentElement.lang = "en";
+                document.body.style.direction = "ltr";
+            }
+
+            // Images for slideshow
+            const images = [
+                "https://imgs.search.brave.com/Gt0dWkGWpqgAWF0x9XY5NaMtfPFL6xdxvY-VOaPgdyk/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly93d3cu/YWZsb3JhbC5jb20v/Y2RuL3Nob3AvZmls/ZXMvQWZsb3JhbC1Q/RFBfNzZfNDRhMTEz/NDctYWE4ZC00NDdj/LTg1ZmUtODQzYzc2/Mzg3ZjEzLmpwZz92/PTE3Mzk0NzQ3Njgm/d2lkdGg9MTEwMA",
+                "https://imgs.search.brave.com/9h42lQOs25ae3hll6P7sOIlZ1YQmsK6fVza1soys_II/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly93d3cu/Y2FycmVtZW50Zmxl/dXJzLmNvbS8yMDAt/cGR0XzU0MC9ib3Vx/dWV0LXJvc2VzLXJv/dWdlcy1jaGFtYm9y/ZC5qcGc"
+            ];
+
+            const flowerImages = [
+                document.querySelector("#content-en img.flower"),
+                document.querySelector("#content-ar img.flower")
+            ];
+
+            let index = 0;
+            let slideInterval;
+
+            function showImage(i) {
+                flowerImages.forEach(img => img.src = images[i]);
+            }
+
+            function nextImage() {
+                index = (index + 1) % images.length;
+                showImage(index);
+            }
+
+            function prevImage() {
+                index = (index - 1 + images.length) % images.length;
+                showImage(index);
+            }
+
+            function startSlideshow() {
+                slideInterval = setInterval(nextImage, 3000);
+            }
+
+            function stopSlideshow() {
+                clearInterval(slideInterval);
+            }
+
+            // Initialize
+            showImage(index);
+            startSlideshow();
+
+            // Buttons
+            const btnNext = document.getElementById("btn-next");
+            const btnPrev = document.getElementById("btn-prev");
+
+            btnNext.addEventListener("click", () => {
+                stopSlideshow();
+                nextImage();
+                startSlideshow();
+            });
+
+            btnPrev.addEventListener("click", () => {
+                stopSlideshow();
+                prevImage();
+                startSlideshow();
+            });
+        });
+    </script>
+</head>
+<body>
+    <header>
+        <h1 id="header-en">Warda by Maryam</h1>
+        <h1 id="header-ar" style="display:none;">وردة بيد مريم</h1>
+    </header>
+    <main>
+        <div id="content-en">
+            <p>Elegant, timeless artificial flowers for every special moment.</p>
+            <div class="slider-wrapper">
+                <img class="flower" src="" alt="Single red rose" />
+                <button id="btn-prev" class="arrow-btn" aria-label="Previous image">&#10094;</button>
+                <button id="btn-next" class="arrow-btn" aria-label="Next image">&#10095;</button>
+            </div>
+            <p>Contact us on <a class="contact-link" href="https://instagram.com" target="_blank">Instagram</a> or <a class="contact-link" href="https://www.tiktok.com/@yourusername" target="_blank">TikTok</a>.</p>
+        </div>
+
+        <div id="content-ar">
+            <p>زهور صناعية أنيقة وخالدة لكل لحظة خاصة.</p>
+            <div class="slider-wrapper">
+                <img class="flower" src="" alt="زهور صناعية جميلة" />
+                <button id="btn-prev" class="arrow-btn" aria-label="الصورة السابقة">&#10094;</button>
+                <button id="btn-next" class="arrow-btn" aria-label="الصورة التالية">&#10095;</button>
+            </div>
+            <p>تواصل معنا عبر <a class="contact-link" href="https://instagram.com" target="_blank">إنستغرام</a> أو <a class="contact-link" href="https://www.tiktok.com/@yourusername" target="_blank">تيك توك</a>.</p>
+        </div>
+    </main>
+    <footer>
+        &copy; 2025 Warda by Maryam — All Rights Reserved
+    </footer>
+
+    <script>
+        // Toggle header titles visibility based on language
+        document.addEventListener("DOMContentLoaded", function() {
+            const userLang = navigator.language || navigator.userLanguage;
+            const headerEn = document.getElementById("header-en");
+            const headerAr = document.getElementById("header-ar");
+            if(userLang.startsWith("ar")) {
+                headerEn.style.display = "none";
+                headerAr.style.display = "block";
+            } else {
+                headerEn.style.display = "block";
+                headerAr.style.display = "none";
+            }
+        });
+    </script>
+</body>
+</html>
